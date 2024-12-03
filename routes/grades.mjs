@@ -85,4 +85,13 @@ router.get("/student/:student_id", async (req, res) => {
   else res.send(results).status(200);
 });
 
+//delete an entry
+router.delete("/:id", async (req, res) => {
+  let collection = await db.collection("grades");
+  let query = { _id: new ObjectId(req.params.id) };
+  let results = await collection.deleteOne(query);
+  if (!results) res.send("not created").status(500);
+  else res.send(results).status(201);
+});
+
 export default router;
