@@ -70,4 +70,19 @@ router.get("/:id", async (req, res) => {
     res.send("not an id").status(400);
   }
 });
+
+//what if we want all the grade entries for a given student
+
+router.get("/student/:student_id", async (req, res) => {
+  let collection = await db.collection("grades");
+
+  let query = { student_id: Number(req.params.student_id) };
+  console.log(query);
+  //why is this an array? because we are exoecting more than one result
+  let results = await collection.find(query).toArray();
+
+  if (!results) res.send("not found").status(404);
+  else res.send(results).status(200);
+});
+
 export default router;
